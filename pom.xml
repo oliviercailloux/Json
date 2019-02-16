@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.github.oliviercailloux</groupId>
+		<artifactId>pom</artifactId>
+		<version>0.0.2</version>
+	</parent>
+	<artifactId>json</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Json</name>
+	<url>https://github.com/oliviercailloux/${project.name}</url>
+	<scm>
+		<connection>scm:git:git://github.com/oliviercailloux/${project.name}.git</connection>
+		<developerConnection>scm:git:ssh://github.com/oliviercailloux/${project.name}.git</developerConnection>
+		<url>https://github.com/oliviercailloux/${project.name}</url>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>jakarta.json</groupId>
+			<artifactId>jakarta.json-api</artifactId>
+			<version>1.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.json</artifactId>
+			<version>1.1.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>jakarta.json.bind</groupId>
+			<artifactId>jakarta.json.bind-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>1.0.3</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>
+
