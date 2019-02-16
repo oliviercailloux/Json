@@ -14,6 +14,22 @@ import javax.json.JsonValue;
 
 @SuppressWarnings("unlikely-arg-type")
 class JsonObjectGeneralWrapper implements PrintableJsonObject {
+	public static PrintableJsonObject wrapRaw(String raw) {
+		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapRaw(raw));
+	}
+
+	public static PrintableJsonObject wrapPrettyPrinted(String prettyPrinted) {
+		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapPrettyPrinted(prettyPrinted));
+	}
+
+	public static PrintableJsonObject wrapUnknown(String unknownForm) {
+		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapUnknown(unknownForm));
+	}
+
+	public static PrintableJsonObject wrapDelegate(JsonObject delegate) {
+		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapDelegate(delegate));
+	}
+
 	/**
 	 * The string representation of this json object (not just a value!); and
 	 * through it, a delegate to the real json object implementation.
@@ -24,42 +40,9 @@ class JsonObjectGeneralWrapper implements PrintableJsonObject {
 		this.stringRepresentationDelegate = requireNonNull(stringRepresentationDelegate);
 	}
 
-	public static PrintableJsonObject wrapDelegate(JsonObject delegate) {
-		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapDelegate(delegate));
-	}
-
-	private JsonObject getDelegate() {
-		return stringRepresentationDelegate.asJsonObject();
-	}
-
 	@Override
-	public boolean equals(Object obj) {
-		return getDelegate().equals(obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return getDelegate().hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return stringRepresentationDelegate.toString();
-	}
-
-	@Override
-	public ValueType getValueType() {
-		return getDelegate().getValueType();
-	}
-
-	@Override
-	public int size() {
-		return getDelegate().size();
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return getDelegate().isEmpty();
+	public void clear() {
+		getDelegate().clear();
 	}
 
 	@Override
@@ -73,43 +56,38 @@ class JsonObjectGeneralWrapper implements PrintableJsonObject {
 	}
 
 	@Override
+	public Set<Entry<String, JsonValue>> entrySet() {
+		return getDelegate().entrySet();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return getDelegate().equals(obj);
+	}
+
+	@Override
 	public JsonValue get(Object key) {
 		return getDelegate().get(key);
 	}
 
 	@Override
-	public JsonValue put(String key, JsonValue value) {
-		return getDelegate().put(key, value);
+	public boolean getBoolean(String name) {
+		return getDelegate().getBoolean(name);
 	}
 
 	@Override
-	public JsonValue remove(Object key) {
-		return getDelegate().remove(key);
+	public boolean getBoolean(String name, boolean defaultValue) {
+		return getDelegate().getBoolean(name, defaultValue);
 	}
 
 	@Override
-	public void putAll(Map<? extends String, ? extends JsonValue> m) {
-		getDelegate().putAll(m);
+	public int getInt(String name) {
+		return getDelegate().getInt(name);
 	}
 
 	@Override
-	public void clear() {
-		getDelegate().clear();
-	}
-
-	@Override
-	public Set<String> keySet() {
-		return getDelegate().keySet();
-	}
-
-	@Override
-	public Collection<JsonValue> values() {
-		return getDelegate().values();
-	}
-
-	@Override
-	public Set<Entry<String, JsonValue>> entrySet() {
-		return getDelegate().entrySet();
+	public int getInt(String name, int defaultValue) {
+		return getDelegate().getInt(name, defaultValue);
 	}
 
 	@Override
@@ -118,13 +96,13 @@ class JsonObjectGeneralWrapper implements PrintableJsonObject {
 	}
 
 	@Override
-	public JsonObject getJsonObject(String name) {
-		return getDelegate().getJsonObject(name);
+	public JsonNumber getJsonNumber(String name) {
+		return getDelegate().getJsonNumber(name);
 	}
 
 	@Override
-	public JsonNumber getJsonNumber(String name) {
-		return getDelegate().getJsonNumber(name);
+	public JsonObject getJsonObject(String name) {
+		return getDelegate().getJsonObject(name);
 	}
 
 	@Override
@@ -143,23 +121,18 @@ class JsonObjectGeneralWrapper implements PrintableJsonObject {
 	}
 
 	@Override
-	public int getInt(String name) {
-		return getDelegate().getInt(name);
+	public ValueType getValueType() {
+		return getDelegate().getValueType();
 	}
 
 	@Override
-	public int getInt(String name, int defaultValue) {
-		return getDelegate().getInt(name, defaultValue);
+	public int hashCode() {
+		return getDelegate().hashCode();
 	}
 
 	@Override
-	public boolean getBoolean(String name) {
-		return getDelegate().getBoolean(name);
-	}
-
-	@Override
-	public boolean getBoolean(String name, boolean defaultValue) {
-		return getDelegate().getBoolean(name, defaultValue);
+	public boolean isEmpty() {
+		return getDelegate().isEmpty();
 	}
 
 	@Override
@@ -168,20 +141,47 @@ class JsonObjectGeneralWrapper implements PrintableJsonObject {
 	}
 
 	@Override
+	public Set<String> keySet() {
+		return getDelegate().keySet();
+	}
+
+	@Override
+	public JsonValue put(String key, JsonValue value) {
+		return getDelegate().put(key, value);
+	}
+
+	@Override
+	public void putAll(Map<? extends String, ? extends JsonValue> m) {
+		getDelegate().putAll(m);
+	}
+
+	@Override
+	public JsonValue remove(Object key) {
+		return getDelegate().remove(key);
+	}
+
+	@Override
+	public int size() {
+		return getDelegate().size();
+	}
+
+	@Override
 	public String toRawString() {
 		return stringRepresentationDelegate.toRawString();
 	}
 
-	public static PrintableJsonObject wrapRaw(String raw) {
-		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapRaw(raw));
+	@Override
+	public String toString() {
+		return stringRepresentationDelegate.toString();
 	}
 
-	public static PrintableJsonObject wrapUnknown(String unknownForm) {
-		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapUnknown(unknownForm));
+	@Override
+	public Collection<JsonValue> values() {
+		return getDelegate().values();
 	}
 
-	public static PrintableJsonObject wrapPrettyPrinted(String prettyPrinted) {
-		return new JsonObjectGeneralWrapper(JsonValueGeneralWrapper.wrapPrettyPrinted(prettyPrinted));
+	private JsonObject getDelegate() {
+		return stringRepresentationDelegate.asJsonObject();
 	}
 
 }

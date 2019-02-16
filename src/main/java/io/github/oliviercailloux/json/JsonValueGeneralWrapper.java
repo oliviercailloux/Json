@@ -27,8 +27,48 @@ import com.google.common.collect.ImmutableMap;
  */
 class JsonValueGeneralWrapper implements PrintableJsonValue {
 
+	public static JsonValueGeneralWrapper wrapRaw(String raw) {
+		return new JsonValueGeneralWrapper(Optional.empty(), Optional.of(raw), Optional.empty());
+	}
+
+	public static JsonValueGeneralWrapper wrapPrettyPrinted(String prettyPrinted) {
+		return new JsonValueGeneralWrapper(Optional.of(prettyPrinted), Optional.empty(), Optional.empty());
+	}
+
+	public static JsonValueGeneralWrapper wrapUnknown(String unknownForm) {
+		return new JsonValueGeneralWrapper(unknownForm);
+	}
+
+	public static JsonValueGeneralWrapper wrapDelegate(JsonValue delegate) {
+		return new JsonValueGeneralWrapper(Optional.empty(), Optional.empty(), Optional.of(delegate));
+	}
+	private static JsonValue asJsonValue(String data) {
+		final JsonValue json;
+		try (JsonReader jr = Json.createReader(new StringReader(data))) {
+			json = jr.readValue();
+		}
+		return json;
+	}
+
+	static private String asPrettyString(JsonValue json) {
+		if (json == null) {
+			return "null";
+		}
+		final StringWriter stringWriter = new StringWriter();
+		final JsonWriterFactory writerFactory = Json
+				.createWriterFactory(ImmutableMap.of(JsonGenerator.PRETTY_PRINTING, true));
+		try (JsonWriter jsonWriter = writerFactory.createWriter(stringWriter)) {
+			jsonWriter.write(json);
+		}
+		final String string = stringWriter.toString();
+		assert string.startsWith("\n");
+		return string.substring(1);
+	}
+
 	private JsonValue delegate;
+
 	private String prettyPrinted;
+
 	private String raw;
 
 	private JsonValueGeneralWrapper(Optional<String> prettyPrinted, Optional<String> raw,
@@ -58,6 +98,16 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
 
 	private JsonValueGeneralWrapper(String unknownForm) {
 		this(Optional.empty(), Optional.empty(), Optional.of(asJsonValue(requireNonNull(unknownForm))));
+	}
+
+	@Override
+	public JsonArray asJsonArray() {
+		return getDelegate().asJsonArray();
+	}
+
+	@Override
+	public JsonObject asJsonObject() {
+		return getDelegate().asJsonObject();
 	}
 
 	@Override
@@ -93,10 +143,6 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
 		return prettyPrinted;
 	}
 
-	public static JsonValueGeneralWrapper wrapPrettyPrinted(String prettyPrinted) {
-		return new JsonValueGeneralWrapper(Optional.of(prettyPrinted), Optional.empty(), Optional.empty());
-	}
-
 	JsonValue getDelegate() {
 		if (delegate == null) {
 			if (raw != null) {
@@ -108,51 +154,6 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
 		}
 
 		return delegate;
-	}
-
-	@Override
-	public JsonArray asJsonArray() {
-		return getDelegate().asJsonArray();
-	}
-
-	@Override
-	public JsonObject asJsonObject() {
-		return getDelegate().asJsonObject();
-	}
-
-	private static JsonValue asJsonValue(String data) {
-		final JsonValue json;
-		try (JsonReader jr = Json.createReader(new StringReader(data))) {
-			json = jr.readValue();
-		}
-		return json;
-	}
-
-	static private String asPrettyString(JsonValue json) {
-		if (json == null) {
-			return "null";
-		}
-		final StringWriter stringWriter = new StringWriter();
-		final JsonWriterFactory writerFactory = Json
-				.createWriterFactory(ImmutableMap.of(JsonGenerator.PRETTY_PRINTING, true));
-		try (JsonWriter jsonWriter = writerFactory.createWriter(stringWriter)) {
-			jsonWriter.write(json);
-		}
-		final String string = stringWriter.toString();
-		assert string.startsWith("\n");
-		return string.substring(1);
-	}
-
-	public static JsonValueGeneralWrapper wrapDelegate(JsonValue delegate) {
-		return new JsonValueGeneralWrapper(Optional.empty(), Optional.empty(), Optional.of(delegate));
-	}
-
-	public static JsonValueGeneralWrapper wrapRaw(String raw) {
-		return new JsonValueGeneralWrapper(Optional.empty(), Optional.of(raw), Optional.empty());
-	}
-
-	public static JsonValueGeneralWrapper wrapUnknown(String unknownForm) {
-		return new JsonValueGeneralWrapper(unknownForm);
 	}
 
 }

@@ -4,16 +4,12 @@ import javax.json.JsonValue;
 
 public class PrintableJsonValueFactory {
 
-	public static PrintableJsonValue wrapPrettyPrintedString(String prettyPrinted) {
-		return JsonValueGeneralWrapper.wrapPrettyPrinted(prettyPrinted);
-	}
-
 	public static PrintableJsonValue wrapRawString(String raw) {
 		return JsonValueGeneralWrapper.wrapRaw(raw);
 	}
 
-	private PrintableJsonValueFactory() {
-		/** Can’t be instantiated. */
+	public static PrintableJsonValue wrapPrettyPrintedString(String prettyPrinted) {
+		return JsonValueGeneralWrapper.wrapPrettyPrinted(prettyPrinted);
 	}
 
 	public static PrintableJsonValue wrapUnknownStringForm(String unknownForm) {
@@ -25,6 +21,10 @@ public class PrintableJsonValueFactory {
 			return (PrintableJsonValue) value;
 		}
 		return JsonValueGeneralWrapper.wrapDelegate(value);
+	}
+
+	private PrintableJsonValueFactory() {
+		/** Can’t be instantiated. */
 	}
 
 }

@@ -29,11 +29,10 @@ public class JsonbUtils {
 		return asObj;
 	}
 
-	private static Jsonb getInstance(@SuppressWarnings("rawtypes") JsonbAdapter... adapters) {
-		if (adapters.length == 0) {
-			return getDefaultJsonb();
-		}
-		return JsonbBuilder.create(new JsonbConfig().withAdapters(adapters).withFormatting(true));
+	public static PrintableJsonValue toJsonValue(Object source,
+			@SuppressWarnings("rawtypes") JsonbAdapter... adapters) {
+		final String asStr = toPrettyPrinted(source, adapters);
+		return PrintableJsonValueFactory.wrapPrettyPrintedString(asStr.substring(1));
 	}
 
 	public static PrintableJsonObject toJsonObject(Object source,
@@ -42,10 +41,11 @@ public class JsonbUtils {
 		return PrintableJsonObjectFactory.wrapPrettyPrintedString(asStr.substring(1));
 	}
 
-	public static PrintableJsonValue toJsonValue(Object source,
-			@SuppressWarnings("rawtypes") JsonbAdapter... adapters) {
-		final String asStr = toPrettyPrinted(source, adapters);
-		return PrintableJsonValueFactory.wrapPrettyPrintedString(asStr.substring(1));
+	private static Jsonb getInstance(@SuppressWarnings("rawtypes") JsonbAdapter... adapters) {
+		if (adapters.length == 0) {
+			return getDefaultJsonb();
+		}
+		return JsonbBuilder.create(new JsonbConfig().withAdapters(adapters).withFormatting(true));
 	}
 
 	private static String toPrettyPrinted(Object source, @SuppressWarnings("rawtypes") JsonbAdapter... adapters) {
@@ -59,9 +59,9 @@ public class JsonbUtils {
 		return asStr;
 	}
 
+	/** TODO doesn’t work because type inference fails, it seems. Bug or feature? */
 	public static <T> JsonbAdapter<T, JsonObject> getAdapter(Function<JsonObject, T> asOriginalFct,
 			Function<T, JsonObject> asJsonFct) {
-		/** TODO doesn’t work because type inference fails, it seems. Bug or feature? */
 		return new JsonbAdapter<T, JsonObject>() {
 			@Override
 			public JsonObject adaptToJson(T obj) throws Exception {
