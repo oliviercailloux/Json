@@ -19,7 +19,7 @@ class JsonWrapperTest {
 
 	@Test
 	void testUnknown() {
-		final PrintableJsonObject obj = PrintableJsonObjectFactory.wrapUnknownStringForm("{\"name\": \"value\"}");
+		final PrintableJsonObject obj = PrintableJsonObjectFactory.wrapString("{\"name\": \"value\"}");
 		assertEquals("value", obj.getString("name"));
 		assertEquals("{\"name\":\"value\"}", obj.toRawString());
 		assertEquals("{\n    \"name\": \"value\"\n}", obj.toString());

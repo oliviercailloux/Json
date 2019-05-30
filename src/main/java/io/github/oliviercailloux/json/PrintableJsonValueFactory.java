@@ -12,7 +12,7 @@ public class PrintableJsonValueFactory {
 		return JsonValueGeneralWrapper.wrapPrettyPrinted(prettyPrinted);
 	}
 
-	public static PrintableJsonValue wrapUnknownStringForm(String unknownForm) {
+	public static PrintableJsonValue wrapString(String unknownForm) {
 		return JsonValueGeneralWrapper.wrapUnknown(unknownForm);
 	}
 
