@@ -9,7 +9,7 @@
 		<version>0.0.2</version>
 	</parent>
 	<artifactId>json</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>Json</name>
 	<url>https://github.com/oliviercailloux/${project.name}</url>
 	<scm>
