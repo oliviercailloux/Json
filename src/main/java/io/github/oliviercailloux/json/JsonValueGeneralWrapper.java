@@ -9,7 +9,6 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
-import jakarta.json.JsonValue.ValueType;
 import jakarta.json.JsonWriter;
 import jakarta.json.JsonWriterFactory;
 import jakarta.json.stream.JsonGenerator;
@@ -41,6 +40,7 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
 	public static JsonValueGeneralWrapper wrapDelegate(JsonValue delegate) {
 		return new JsonValueGeneralWrapper(Optional.empty(), Optional.empty(), Optional.of(delegate));
 	}
+
 	private static JsonValue asJsonValue(String data) {
 		final JsonValue json;
 		try (JsonReader jr = Json.createReader(new StringReader(data))) {
@@ -59,9 +59,7 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
 		try (JsonWriter jsonWriter = writerFactory.createWriter(stringWriter)) {
 			jsonWriter.write(json);
 		}
-		final String string = stringWriter.toString();
-		assert string.startsWith("\n");
-		return string.substring(1);
+		return stringWriter.toString();
 	}
 
 	private JsonValue delegate;
