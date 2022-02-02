@@ -15,7 +15,21 @@
 		<developerConnection>scm:git:ssh://github.com/oliviercailloux/${project.name}.git</developerConnection>
 		<url>https://github.com/oliviercailloux/${project.name}</url>
 	</scm>
-
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<configuration>
+							<failOnWarnings>false</failOnWarnings>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>jakarta.json</groupId>
