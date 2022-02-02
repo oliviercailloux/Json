@@ -7,7 +7,7 @@
 		<version>0.0.14</version>
 	</parent>
 	<artifactId>json</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<name>Json</name>
 	<url>https://github.com/oliviercailloux/${project.name}</url>
 	<scm>
