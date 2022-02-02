@@ -50,7 +50,7 @@ class JsonValueGeneralWrapper implements PrintableJsonValue {
     return json;
   }
 
-  static private String asPrettyString(JsonValue json) {
+  private static String asPrettyString(JsonValue json) {
     if (json == null) {
       return "null";
     }

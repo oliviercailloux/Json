@@ -24,6 +24,6 @@ public class PrintableJsonObjectFactory {
   }
 
   private PrintableJsonObjectFactory() {
-    /** Can’t be instantiated. */
+    /* Can’t be instantiated. */
   }
 }
