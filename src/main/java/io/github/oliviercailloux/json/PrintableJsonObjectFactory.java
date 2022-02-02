@@ -1,6 +1,6 @@
 package io.github.oliviercailloux.json;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 
 public class PrintableJsonObjectFactory {
 

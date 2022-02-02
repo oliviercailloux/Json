@@ -2,9 +2,8 @@ package io.github.oliviercailloux.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 import org.junit.jupiter.api.Test;
 
 class JsonWrapperTest {

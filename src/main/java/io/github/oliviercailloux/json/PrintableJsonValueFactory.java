@@ -1,6 +1,6 @@
 package io.github.oliviercailloux.json;
 
-import javax.json.JsonValue;
+import jakarta.json.JsonValue;
 
 public class PrintableJsonValueFactory {
 

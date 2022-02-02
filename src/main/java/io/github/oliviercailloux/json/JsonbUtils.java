@@ -1,13 +1,12 @@
 package io.github.oliviercailloux.json;
 
+import jakarta.json.JsonObject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
+import jakarta.json.bind.adapter.JsonbAdapter;
 import java.lang.reflect.Type;
 import java.util.function.Function;
-
-import javax.json.JsonObject;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.adapter.JsonbAdapter;
 
 public class JsonbUtils {
 	private static JsonbBuilder jsonbDefaultBuilder = null;
